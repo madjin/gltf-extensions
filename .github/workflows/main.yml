@@ -12,8 +12,8 @@ jobs:
     - name: Update READMEs
       run: |
         cd extensions/2.0/
-        chmod +x update_readmes.sh
-        ./update_readmes.sh
+        chmod +x readmes.sh
+        ./readmes.sh
     - name: Commit changes
       run: |
         git config --global user.name "madjin"
