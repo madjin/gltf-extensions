@@ -2,6 +2,7 @@
 
 for folder in $(ls -d */ | sed 's#/##g');do
   cd $folder
+  sudo apt install -y pandoc imagemagick wkhtmltopdf
   pandoc README.md -f gfm+pipe_tables -t html -s -o $folder.html --css ../table2.css
   wkhtmltoimage --width 0 $folder.html $folder.jpg
   
