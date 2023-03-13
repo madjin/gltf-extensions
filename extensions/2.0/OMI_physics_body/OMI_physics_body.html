@@ -187,6 +187,12 @@
 <td>The initial angular velocity of the body in radians per second.</td>
 <td>[0.0, 0.0, 0.0]</td>
 </tr>
+<tr class="odd">
+<td><strong>inertiaTensor</strong></td>
+<td><code>number[9]</code></td>
+<td>The inertia tensor 3x3 matrix in kilogram meter squared (kg⋅m²).</td>
+<td>[0.0, ..., 0.0]</td>
+</tr>
 </tbody>
 </table>
 <h3 id="physics-types">Physics Types</h3>
@@ -266,6 +272,10 @@
 <p>The <code>"linearVelocity"</code> property is an array of three numbers that defines how much linear velocity this physics body starts with in meters per second. Not all body types can make use of linear velocity, such as non-moving bodies, in which case the linear velocity can be ignored. If not specified, the default value is zero.</p>
 <h3 id="angular-velocity">Angular Velocity</h3>
 <p>The <code>"angularVelocity"</code> property is an array of three numbers that defines how much angular velocity this physics body starts with in radians per second. Not all body types can make use of angular velocity, such as non-moving bodies, in which case the angular velocity can be ignored. If not specified, the default value is zero.</p>
+<h3 id="inertia-tensor">Inertia Tensor</h3>
+<p>The <code>"inertiaTensor"</code> property is an array of 9 numbers that defines the inertia tensor 3x3 matrix of the body in kilogram meter squared (kg⋅m²). We specify "tensor" in the name because this defines inertia in multiple directions and is different from linear momentum inertia. Only "rigid" and "vehicle" body types can make use of inertia. If zero or not specified, the inertia should be automatically calculated by the physics engine.</p>
+<p>The inertia tensor matrix is a symmetric matrix. The inertia matrix represents the mass distribution of the body and determines how hard the body is to rotate. The values on the diagonal represent the inertia around the 3 principle axes (X, Y, Z), while the values not on the diagonal represent the 3 coupling values between the axes (XY, XZ, YZ). For more information, refer to the Wikipedia article.</p>
+<p>Some engines only support specifying the inertia around the principle axes as a Vector3. In those engines, when importing a glTF file and reading the inertia matrix, only the diagonal principle axis values should be used, and the non-diagonal coupling values should be discarded. Similarly, when exporting a glTF file while writing the inertia matrix, write the Vector3 values to the matrix diagonal principle axis values, and set the non-diagonal coupling values to zero.</p>
 <h3 id="json-schema">JSON Schema</h3>
 <p>See <a href="schema/node.OMI_physics_body.schema.json">schema/node.OMI_physics_body.schema.json</a>.</p>
 <h2 id="known-implementations">Known Implementations</h2>
@@ -278,6 +288,8 @@
 <li>Unreal Engine Physics: <a href="https://docs.unrealengine.com/4.27/en-US/InteractiveExperiences/Physics/Collision/Overview/">https://docs.unrealengine.com/4.27/en-US/InteractiveExperiences/Physics/Collision/Overview/</a></li>
 <li>Godot Physics Body: <a href="https://docs.godotengine.org/en/stable/classes/class_physicsbody.html">https://docs.godotengine.org/en/stable/classes/class_physicsbody.html</a></li>
 <li>Godot Area: <a href="https://docs.godotengine.org/en/stable/classes/class_area.html">https://docs.godotengine.org/en/stable/classes/class_area.html</a></li>
+<li>Godot RigidBody3D: <a href="https://docs.godotengine.org/en/latest/classes/class_rigidbody3d.html">https://docs.godotengine.org/en/latest/classes/class_rigidbody3d.html</a></li>
+<li>Wikipedia Moment of Inertia and Inertia Tensor <a href="https://en.wikipedia.org/wiki/Moment_of_inertia#Inertia_tensor">https://en.wikipedia.org/wiki/Moment_of_inertia#Inertia_tensor</a></li>
 </ul>
 </body>
 </html>
