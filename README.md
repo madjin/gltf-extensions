@@ -94,11 +94,14 @@ The extension has been submitted and merged as an OMI vendor extension. Alternat
 ### Stage 0
 
 ### Stage 1
-- [OMI_physics_body](extensions/2.0/OMI_physics_body/README.md)
-- [OMI_seat](extensions/2.0/OMI_seat/README.md)
+- [OMI_link](extensions/2.0/OMI_link)
+- [OMI_spawn_point](extensions/2.0/OMI_spawn_point)
+- [OMI_personality](extensions/2.0/OMI_personality)
 
 ### Stage 2
 - [OMI_collider](extensions/2.0/OMI_collider/README.md)
+- [OMI_physics_body](extensions/2.0/OMI_physics_body/README.md)
+- [OMI_seat](extensions/2.0/OMI_seat/README.md)
 
 ### Stage 3
 
@@ -226,7 +229,7 @@ The extension has been submitted and merged as an OMI vendor extension. Alternat
           OMI_physics_body
         </a>
       </td>
-      <td>Stage 1</td>
+      <td>Stage 2</td>
       <td><a href="https://github.com/aaronfranke/glTF-Validator/tree/omi_physics_body">✅</a></td>
       <td>❌</td>
       <td>❌</td>
@@ -249,6 +252,29 @@ The extension has been submitted and merged as an OMI vendor extension. Alternat
           OMI_seat
         </a>
       </td>
+      <td>Stage 2</td>
+      <td>❌</td>
+      <td>❌</td>
+      <td>❌</td>
+      <td>❌</td>
+      <td>❌</td>
+      <td>❌</td>
+      <td>🚧</td>
+      <td>❌</td>
+      <td>🚧</td>
+      <td>❌</td>
+      <td>❌</td>
+      <td>❌</td>
+      <td>❌</td>
+      <td>❌</td>
+      <td>❌</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://github.com/omigroup/gltf-extensions/tree/main/extensions/2.0/OMI_link">
+          OMI_link
+        </a>
+      </td>
       <td>Stage 1</td>
       <td>❌</td>
       <td>❌</td>
@@ -256,9 +282,55 @@ The extension has been submitted and merged as an OMI vendor extension. Alternat
       <td>❌</td>
       <td>❌</td>
       <td>❌</td>
-      <td>🚧</td>
       <td>❌</td>
-      <td>🚧</td>
+      <td>❌</td>
+      <td>❌</td>
+      <td>❌</td>
+      <td>❌</td>
+      <td>❌</td>
+      <td>❌</td>
+      <td>❌</td>
+      <td>❌</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://github.com/omigroup/gltf-extensions/tree/main/extensions/2.0/OMI_spawn_point">
+          OMI_spawn_point
+        </a>
+      </td>
+      <td>Stage 1</td>
+      <td>❌</td>
+      <td>❌</td>
+      <td>❌</td>
+      <td>❌</td>
+      <td>❌</td>
+      <td>❌</td>
+      <td>❌</td>
+      <td>❌</td>
+      <td>❌</td>
+      <td>❌</td>
+      <td>❌</td>
+      <td>❌</td>
+      <td>❌</td>
+      <td>❌</td>
+      <td>❌</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://github.com/omigroup/gltf-extensions/tree/main/extensions/2.0/OMI_personality">
+          OMI_personality
+        </a>
+      </td>
+      <td>Stage 1</td>
+      <td>❌</td>
+      <td>❌</td>
+      <td>❌</td>
+      <td>❌</td>
+      <td>❌</td>
+      <td>❌</td>
+      <td>❌</td>
+      <td>❌</td>
+      <td>❌</td>
       <td>❌</td>
       <td>❌</td>
       <td>❌</td>
