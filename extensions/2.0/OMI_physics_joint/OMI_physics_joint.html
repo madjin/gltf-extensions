@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../table2.css" />
+</head>
+<body>
+<h1 id="omi_physics_joint">OMI_physics_joint</h1>
+<h2 id="contributors">Contributors</h2>
+<ul>
+<li>Aaron Franke, The Mirror Megaverse Inc.</li>
+</ul>
+<h2 id="status">Status</h2>
+<p>Open Metaverse Interoperability Group Stage 1 Proposal</p>
+<h2 id="dependencies">Dependencies</h2>
+<p>Written against the glTF 2.0 spec.</p>
+<p>Depends on the <code>OMI_physics_body</code> spec, which depends on the <code>OMI_collider</code> spec.</p>
+<h2 id="overview">Overview</h2>
+<p>This extension allows defining a glTF node as a physics joint for constraining rigid bodies.</p>
+<p>Each physics joint node is a separate node that references the two bodies it joints together. At least one of the bodies must be a rigid body (<code>OMI_physics_body</code> "rigid" or "vehicle") for the joint to function. One or zero of the connected nodes may be a solid body that joints cannot move (<code>OMI_physics_body</code> "static", "kinematic", "character"). A joint cannot be connected to a trigger body, and cannot be connected to a non-<code>OMI_physics_body</code> glTF node.</p>
+<p>Each physics joint node must reference one or more joint constraints defined in the document-level joint constraints array.</p>
+<p>A joint should be on its own glTF node, it should not be on the same node as a mesh, camera, light, collider, physics body, etc.</p>
+<h3 id="example">Example:</h3>
+<p>This example defines 2 rigid bodies that are connected with a joint that constrains linearly on a fixed point, also known as a "pin" joint. This example JSON is a subset of the <a href="examples/simple_joint.gltf">examples/simple_joint.gltf</a> file.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="fu">{</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a>    <span class="dt">&quot;asset&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a>        <span class="dt">&quot;version&quot;</span><span class="fu">:</span> <span class="st">&quot;2.0&quot;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a>    <span class="fu">},</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a>    <span class="dt">&quot;extensionsUsed&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a>        <span class="st">&quot;OMI_collider&quot;</span><span class="ot">,</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a>        <span class="st">&quot;OMI_physics_body&quot;</span><span class="ot">,</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a>        <span class="st">&quot;OMI_physics_joint&quot;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a>    <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a>    <span class="dt">&quot;extensions&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true"></a>        <span class="dt">&quot;OMI_collider&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true"></a>            <span class="dt">&quot;colliders&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true"></a>                <span class="fu">{</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true"></a>                    <span class="dt">&quot;height&quot;</span><span class="fu">:</span> <span class="fl">0.5</span><span class="fu">,</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true"></a>                    <span class="dt">&quot;radius&quot;</span><span class="fu">:</span> <span class="fl">0.05</span><span class="fu">,</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true"></a>                    <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;capsule&quot;</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true"></a>                <span class="fu">}</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true"></a>            <span class="ot">]</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true"></a>        <span class="fu">},</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true"></a>        <span class="dt">&quot;OMI_physics_joint&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true"></a>            <span class="dt">&quot;constraints&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true"></a>                <span class="fu">{</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true"></a>                    <span class="dt">&quot;linearAxes&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="dv">0</span><span class="ot">,</span> <span class="dv">1</span><span class="ot">,</span> <span class="dv">2</span><span class="ot">]</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true"></a>                <span class="fu">}</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true"></a>            <span class="ot">]</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true"></a>        <span class="fu">}</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true"></a>    <span class="fu">},</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true"></a>    <span class="dt">&quot;nodes&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true"></a>        <span class="fu">{</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true"></a>            <span class="dt">&quot;extensions&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true"></a>                <span class="dt">&quot;OMI_physics_joint&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true"></a>                    <span class="dt">&quot;constraints&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="dv">0</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true"></a>                    <span class="dt">&quot;nodeA&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true"></a>                    <span class="dt">&quot;nodeB&quot;</span><span class="fu">:</span> <span class="dv">2</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true"></a>                <span class="fu">}</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true"></a>            <span class="fu">},</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true"></a>            <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;PinJoint&quot;</span><span class="fu">,</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true"></a>            <span class="dt">&quot;translation&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="fl">-0.23</span><span class="ot">,</span> <span class="fl">0.6</span><span class="ot">,</span> <span class="fl">0.0</span><span class="ot">]</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true"></a>        <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true"></a>        <span class="fu">{</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true"></a>            <span class="dt">&quot;extensions&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true"></a>                <span class="dt">&quot;OMI_physics_body&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true"></a>                    <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;rigid&quot;</span></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true"></a>                <span class="fu">}</span></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true"></a>            <span class="fu">},</span></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true"></a>            <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;BodyA&quot;</span><span class="fu">,</span></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true"></a>            <span class="dt">&quot;rotation&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="fl">0.0</span><span class="ot">,</span> <span class="fl">0.0</span><span class="ot">,</span> <span class="fl">-0.17364804446697</span><span class="ot">,</span> <span class="fl">0.984807789325714</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true"></a>            <span class="dt">&quot;translation&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="fl">-0.45</span><span class="ot">,</span> <span class="fl">0.68</span><span class="ot">,</span> <span class="fl">0.0</span><span class="ot">]</span></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true"></a>        <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true"></a>        <span class="fu">{</span></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true"></a>            <span class="dt">&quot;extensions&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true"></a>                <span class="dt">&quot;OMI_physics_body&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true"></a>                    <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;rigid&quot;</span></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true"></a>                <span class="fu">}</span></span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true"></a>            <span class="fu">},</span></span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true"></a>            <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;BodyB&quot;</span><span class="fu">,</span></span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true"></a>            <span class="dt">&quot;translation&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="fl">0.0</span><span class="ot">,</span> <span class="fl">0.6</span><span class="ot">,</span> <span class="fl">0.0</span><span class="ot">]</span></span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true"></a>        <span class="fu">}</span></span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true"></a>    <span class="ot">]</span></span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true"></a><span class="fu">}</span></span></code></pre></div>
+<p>More example assets can be found in the <a href="examples/">examples/</a> folder.</p>
+<h2 id="gltf-schema-updates">glTF Schema Updates</h2>
+<p>This extension consists of three new data structures for defining joints. A glTF file with joints should have a document-level <code>"OMI_physics_joint"</code> object added to the document <code>"extensions"</code> which contains an array of joint constraints. Each joint constraint is an object defined as the below spec. Then, the key <code>"OMI_physics_joint"</code> can be added to the node-level <code>"extensions"</code> of a glTF node to define that node as a physics joint. Each joint node has an array of constraints that references the document-level constraints array by index, and each joint node also references 2 physics body nodes.</p>
+<p>The extension must also be added to the glTF's <code>extensionsUsed</code> array and because it is optional, it does not need to be added to the <code>extensionsRequired</code> array.</p>
+<h3 id="joint-constraint-property-summary">Joint Constraint Property Summary</h3>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>Type</th>
+<th>Description</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>linearAxes</strong></td>
+<td><code>number[0..3]</code></td>
+<td>The axes to constrain. Can only contain 0 (X), 1 (Y), or 2 (Z).</td>
+<td>[] (empty array)</td>
+</tr>
+<tr class="even">
+<td><strong>angularAxes</strong></td>
+<td><code>number[0..3]</code></td>
+<td>The axes to constrain. Can only contain 0 (X), 1 (Y), or 2 (Z).</td>
+<td>[] (empty array)</td>
+</tr>
+<tr class="odd">
+<td><strong>lowerLimit</strong></td>
+<td><code>number</code></td>
+<td>The lower limit of the constraint, in meters or radians.</td>
+<td>0.0</td>
+</tr>
+<tr class="even">
+<td><strong>upperLimit</strong></td>
+<td><code>number</code></td>
+<td>The lower limit of the constraint, in meters or radians.</td>
+<td>0.0</td>
+</tr>
+<tr class="odd">
+<td><strong>stiffness</strong></td>
+<td><code>number</code></td>
+<td>The stiffness of the limits, how hard to spring back when beyond.</td>
+<td>Infinity</td>
+</tr>
+<tr class="even">
+<td><strong>damping</strong></td>
+<td><code>number</code></td>
+<td>When beyond the limits, the damping of the springing back motion.</td>
+<td>1.0</td>
+</tr>
+</tbody>
+</table>
+<p>A joint constraint should define at least one linear axis or one angular axis, otherwise the joint constraint will not perform any constraints.</p>
+<p>The reason that joints constraints are defined at the document-level and referenced on nodes is because it's very common to have many joints with the same constraints. For example, a long rope using many bodies each with pin joints (linear axes constrained) would have the same joint constraints repeated many times, but with different nodes attached.</p>
+<h4 id="linear-axes">Linear Axes</h4>
+<p>The <code>"linearAxes"</code> property defines a list of linear axes to constrain. Can only contain 3 possible values, 0 (X), 1 (Y), or 2 (Z). If empty or not specified, this joint constraint does not constrain linearly.</p>
+<h4 id="angular-axes">Angular Axes</h4>
+<p>The <code>"angularAxes"</code> property defines a list of angular axes to constrain. Can only contain 3 possible values, 0 (X), 1 (Y), or 2 (Z). If empty or not specified, this joint constraint does not constrain angularly.</p>
+<h4 id="lower-limit">Lower Limit</h4>
+<p>The <code>"lowerLimit"</code> property defines the lower limit of the constraint in meters or radians, depending on whether the constraint is linear or angular. If not specified, the default value is 0.0.</p>
+<p>The lower limit must be less than or equal to the upper limit, otherwise the constraint is invalid. If the lower and upper limits are equal, the constraint is fixed on that value.</p>
+<h4 id="upper-limit">Upper Limit</h4>
+<p>The <code>"upperLimit"</code> property defines the upper limit of the constraint in meters or radians, depending on whether the constraint is linear or angular. If not specified, the default value is 0.0.</p>
+<p>The upper limit must be greater than or equal to the lower limit, otherwise the constraint is invalid. If the lower and upper limits are equal, the constraint is fixed on that value.</p>
+<h4 id="stiffness">Stiffness</h4>
+<p>The <code>"stiffness"</code> property defines how soft or hard the limits are, and how much force should be applied to the bodies to spring back once they surpasses the limits. Must be positive. If not specified, the default value is infinity.</p>
+<p>A lower value indicates a softer limit, while a higher value indicades a harder limit. A value of infinity means the limits should be completely hard and may not be surpassed. Implementations are expected to clamp this to within the limits of the physics engine. For example, if a physics engine cannot handle an infinite stiffness, it should be set to a high value, since an extremely stiff joint is close enough to an infinitely stiff joint. For more information, see the Wikipedia article on stiffness.</p>
+<h4 id="damping">Damping</h4>
+<p>The <code>"damping"</code> property defines the amount of damping the bodies should experience while the bodies surpasses the limits and are springing back to be within them. Damping must not be applied when within the limits. Must be non-negative. If not specified, the default value is 1.0.</p>
+<h3 id="node-property-summary">Node Property Summary</h3>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>Type</th>
+<th>Description</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>constraints</strong></td>
+<td><code>number[]</code></td>
+<td>Array of indices in the document-level constraint array. Must be integers.</td>
+<td>Required, no default</td>
+</tr>
+<tr class="even">
+<td><strong>nodeA</strong></td>
+<td><code>number</code></td>
+<td>Node index of one physics body used by the joint. Must be an integer.</td>
+<td>Required, no default</td>
+</tr>
+<tr class="odd">
+<td><strong>nodeB</strong></td>
+<td><code>number</code></td>
+<td>Node index of one physics body used by the joint. Must be an integer.</td>
+<td>Required, no default</td>
+</tr>
+</tbody>
+</table>
+<h4 id="constraints">Constraints</h4>
+<p>The <code>"constraints"</code> property defines the joint constraints to use for this joint. Must be an array of integers which are the index of the constraint in the document-level array.</p>
+<p>If a joint node has multiple joint constraints that overlap each other, later constraints should override the previous constraints.</p>
+<h4 id="node-a-and-node-b">Node A and Node B</h4>
+<p>Each of these properties defines one of two bodies used by the joint. Must be an integer which is the index of the glTF node, and that node must be a physics body defined using the <code>OMI_physics_body</code> spec.</p>
+<p>At least one of the connected nodes must be a physics body using rigid body physics, meaning <code>OMI_physics_body</code> set to "rigid" or "vehicle". If neither node is using rigid body physics, the joints will not work. When physics body nodes are joined, they should not collide with each other. One or zero of the nodes can be a solid body that cannot be moved by joints, meaning <code>OMI_physics_body</code> set to "static", "kinematic" or "character". A connected node cannot be null, cannot be a non-body, and cannot be a trigger body.</p>
+<p>The position on the body on which the joint operates is determined by the position of the joint relative to each body node. As such, the initial position of the joint node does matter.</p>
+<h3 id="document-property-summary">Document Property Summary</h3>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>Type</th>
+<th>Description</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>constraints</strong></td>
+<td><code>object[]</code></td>
+<td>Array of joint constraint objects.</td>
+<td>Required, no default</td>
+</tr>
+</tbody>
+</table>
+<h3 id="special-cases">Special Cases</h3>
+<p>While a generic joint type is very useful and extensible, it's also worth defining when a generic joint is equivalent to a special-purpose joint. These mappings can be used to convert to more optimized joint types if supported in a physics engine, or as simply a friendly name to display to a user.</p>
+<p>In this chart, "fixed" means "constrained with lower and upper limits set to zero", and "free" means "not constrained".</p>
+<table>
+<thead>
+<tr class="header">
+<th>Special case name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Fixed / Weld Joint</td>
+<td>All axes fixed.</td>
+</tr>
+<tr class="even">
+<td>Pin Joint</td>
+<td>All linear axes fixed, all angular axes free.</td>
+</tr>
+<tr class="odd">
+<td>Hinge Joint</td>
+<td>One angular axis constrained with non-equal lower and upper limits, the rest are fixed.</td>
+</tr>
+<tr class="even">
+<td>Slider Joint</td>
+<td>One linear axis and optionally the angular axis around it constrained with non-equal lower and upper limits, the rest are fixed.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="json-schema">JSON Schema</h3>
+<p>See <a href="schema/joint_constraint.schema.json">schema/joint_constraint.schema.json</a>, <a href="schema/node.OMI_physics_joint.schema.json">schema/node.OMI_physics_joint.schema.json</a>, and <a href="schema/glTF.OMI_physics_joint.schema.json">schema/glTF.OMI_physics_joint.schema.json</a> for the schemas.</p>
+<h2 id="known-implementations">Known Implementations</h2>
+<ul>
+<li>Godot Engine add-on</li>
+</ul>
+<h2 id="resources">Resources:</h2>
+<ul>
+<li>Godot Joint3D <a href="https://docs.godotengine.org/en/latest/classes/class_generic6dofjoint3d.html">https://docs.godotengine.org/en/latest/classes/class_generic6dofjoint3d.html</a></li>
+<li>Unity Joints <a href="https://docs.unity3d.com/Manual/Joints.html">https://docs.unity3d.com/Manual/Joints.html</a></li>
+<li>Wikipedia Stiffness <a href="https://en.wikipedia.org/wiki/Stiffness">https://en.wikipedia.org/wiki/Stiffness</a></li>
+</ul>
+</body>
+</html>
