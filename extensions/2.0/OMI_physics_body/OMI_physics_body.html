@@ -85,14 +85,14 @@
 <li>Mauve Signweaver, Mauve Software Inc.</li>
 </ul>
 <h2 id="status">Status</h2>
-<p>Open Metaverse Interoperability Group Stage 2 Proposal</p>
+<p>Open Metaverse Interoperability Group Stage 1 Proposal</p>
 <h2 id="dependencies">Dependencies</h2>
 <p>Written against the glTF 2.0 spec.</p>
-<p>Depends on the <code>OMI_collider</code> spec to be useful.</p>
+<p>Depends on the <code>OMI_physics_shape</code> spec to be useful.</p>
 <h2 id="overview">Overview</h2>
 <p>This extension allows for specifying the type of physics body in glTF scenes.</p>
-<p>Physics bodies are defined with a type and a mass. Nodes with collider shapes defined using the <code>OMI_collider</code> spec should be added as direct children of physics bodies. In order to be associated with a <code>OMI_physics_body</code> glTF node, <code>OMI_collider</code> glTF nodes must be direct children, not indirect children.</p>
-<p>Each glTF node with <code>OMI_collider</code> may be associated with zero or one <code>OMI_physics_body</code> glTF node as its direct parent. Each glTF node with <code>OMI_physics_body</code> should have one or many <code>OMI_collider</code> glTF node direct children (zero is valid but not recommended, since physics bodies have no function if they have zero collider shape children). Multiple <code>OMI_collider</code> direct children of a body with the same <code>isTrigger</code> setting may be treated as a single "compound collider" in game engines that support them.</p>
+<p>Physics bodies are defined with a string enum for the type. Nodes with physics shapes defined using the <code>OMI_physics_shape</code> spec should be added as direct children of physics bodies. In order to be associated with a <code>OMI_physics_body</code> glTF node, <code>OMI_physics_shape</code> glTF nodes must be direct children, not indirect children.</p>
+<p>Each glTF node with <code>OMI_physics_shape</code> may be associated with zero or one <code>OMI_physics_body</code> glTF node as its direct parent. Each glTF node with <code>OMI_physics_body</code> should have one or many <code>OMI_physics_shape</code> glTF node direct children (zero is valid but not recommended, since physics bodies will not collide with anything if they have zero physics shape children).</p>
 <h3 id="example">Example:</h3>
 <p>This example defines a static body node which has a single box collider as a child:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="fu">{</span></span>
@@ -100,8 +100,8 @@
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a>        <span class="dt">&quot;version&quot;</span><span class="fu">:</span> <span class="st">&quot;2.0&quot;</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a>    <span class="fu">},</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a>    <span class="dt">&quot;extensions&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a>        <span class="dt">&quot;OMI_collider&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a>            <span class="dt">&quot;colliders&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a>        <span class="dt">&quot;OMI_physics_shape&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a>            <span class="dt">&quot;shapes&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a>                <span class="fu">{</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a>                    <span class="dt">&quot;size&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a>                        <span class="dv">1</span><span class="ot">,</span></span>
@@ -114,8 +114,8 @@
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true"></a>        <span class="fu">}</span></span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true"></a>    <span class="fu">},</span></span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true"></a>    <span class="dt">&quot;extensionsUsed&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true"></a>        <span class="st">&quot;OMI_collider&quot;</span><span class="ot">,</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true"></a>        <span class="st">&quot;OMI_physics_body&quot;</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true"></a>        <span class="st">&quot;OMI_physics_body&quot;</span><span class="ot">,</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true"></a>        <span class="st">&quot;OMI_physics_shape&quot;</span></span>
 <span id="cb1-22"><a href="#cb1-22" aria-hidden="true"></a>    <span class="ot">]</span><span class="fu">,</span></span>
 <span id="cb1-23"><a href="#cb1-23" aria-hidden="true"></a>    <span class="dt">&quot;nodes&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
 <span id="cb1-24"><a href="#cb1-24" aria-hidden="true"></a>        <span class="fu">{</span></span>
@@ -131,8 +131,8 @@
 <span id="cb1-34"><a href="#cb1-34" aria-hidden="true"></a>        <span class="fu">}</span><span class="ot">,</span></span>
 <span id="cb1-35"><a href="#cb1-35" aria-hidden="true"></a>        <span class="fu">{</span></span>
 <span id="cb1-36"><a href="#cb1-36" aria-hidden="true"></a>            <span class="dt">&quot;extensions&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true"></a>                <span class="dt">&quot;OMI_collider&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true"></a>                    <span class="dt">&quot;collider&quot;</span><span class="fu">:</span> <span class="dv">0</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true"></a>                <span class="dt">&quot;OMI_physics_shape&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true"></a>                    <span class="dt">&quot;shape&quot;</span><span class="fu">:</span> <span class="dv">0</span></span>
 <span id="cb1-39"><a href="#cb1-39" aria-hidden="true"></a>                <span class="fu">}</span></span>
 <span id="cb1-40"><a href="#cb1-40" aria-hidden="true"></a>            <span class="fu">},</span></span>
 <span id="cb1-41"><a href="#cb1-41" aria-hidden="true"></a>            <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;StaticShape&quot;</span></span>
@@ -147,11 +147,11 @@
 <span id="cb1-50"><a href="#cb1-50" aria-hidden="true"></a>        <span class="fu">}</span></span>
 <span id="cb1-51"><a href="#cb1-51" aria-hidden="true"></a>    <span class="ot">]</span></span>
 <span id="cb1-52"><a href="#cb1-52" aria-hidden="true"></a><span class="fu">}</span></span></code></pre></div>
-<p>More example assets can be found in the <a href="examples/">examples/</a> folder. All of these examples use both <code>OMI_collider</code> and <code>OMI_physics_body</code>.</p>
+<p>More example assets can be found in the <a href="examples/">examples/</a> folder. All of these examples use both <code>OMI_physics_shape</code> and <code>OMI_physics_body</code>.</p>
 <h2 id="gltf-schema-updates">glTF Schema Updates</h2>
 <p>This extension consists of a new <code>OMI_physics_body</code> data structure which can be added to a glTF node.</p>
 <p>The extension must also be added to the glTF's <code>extensionsUsed</code> array and because it is optional, it does not need to be added to the <code>extensionsRequired</code> array.</p>
-<p>The extension is intended to be used together with <code>OMI_collider</code>. Physics bodies without collision shapes on them will not have any function.</p>
+<p>The extension is intended to be used together with <code>OMI_physics_shape</code>. Physics bodies without collision shapes on them are valid but will not collide with anything.</p>
 <h3 id="property-summary">Property Summary</h3>
 <table>
 <thead>
@@ -188,6 +188,12 @@
 <td>[0.0, 0.0, 0.0]</td>
 </tr>
 <tr class="odd">
+<td><strong>centerOfMass</strong></td>
+<td><code>number[3]</code></td>
+<td>The center of mass offset from the origin in meters.</td>
+<td>[0.0, 0.0, 0.0]</td>
+</tr>
+<tr class="even">
 <td><strong>inertiaTensor</strong></td>
 <td><code>number[9]</code></td>
 <td>The inertia tensor 3x3 matrix in kilogram meter squared (kg⋅m²).</td>
@@ -264,14 +270,16 @@
 <h4 id="vehicle">Vehicle</h4>
 <p>Vehicle bodies are like rigid bodies, except are designed for vehicles. If an engine does not have a dedicated vehicle type, treat this as rigid instead.</p>
 <h4 id="trigger">Trigger</h4>
-<p>Trigger bodies do not collide with other objects, but can generate events when another physics body "enters" them. For example, a "goal" area which triggers whenever a ball gets thrown into it.</p>
-<p>If an <code>OMI_collider</code>'s <code>"isTrigger"</code> setting does not match the body it's a part of, implementations should ensure the per-collider setting is preserved.</p>
+<p>Trigger bodies do not collide with other objects, but can generate events when another physics body "enters" them. For example, a "goal" area which triggers whenever a ball gets thrown into it. Trigger bodies can be added as children of other bodies to attach a trigger volume to another body.</p>
 <h3 id="mass">Mass</h3>
 <p>The <code>"mass"</code> property is a number that defines how much mass this physics body has in kilograms. Not all body types can make use of mass, such as triggers or non-moving bodies, in which case the mass can be ignored. If not specified, the default value is 1 kilogram.</p>
 <h3 id="linear-velocity">Linear Velocity</h3>
 <p>The <code>"linearVelocity"</code> property is an array of three numbers that defines how much linear velocity this physics body starts with in meters per second. Not all body types can make use of linear velocity, such as non-moving bodies, in which case the linear velocity can be ignored. If not specified, the default value is zero.</p>
 <h3 id="angular-velocity">Angular Velocity</h3>
 <p>The <code>"angularVelocity"</code> property is an array of three numbers that defines how much angular velocity this physics body starts with in radians per second. Not all body types can make use of angular velocity, such as non-moving bodies, in which case the angular velocity can be ignored. If not specified, the default value is zero.</p>
+<h3 id="center-of-mass">Center of Mass</h3>
+<p>The <code>"centerOfMass"</code> property is an array of three numbers that defines the position offset in meters of the center of mass in the body's local space.</p>
+<p>This property is useful when converting assets with a center of mass, but when creating new assets it is recommended to leave the center of mass at the body's origin. Some physics engines support the center of mass being offset from the origin, but not all of them do. Implementations without support for a center of mass offset would have to adjust the node positions to make this work, which may be undesired.</p>
 <h3 id="inertia-tensor">Inertia Tensor</h3>
 <p>The <code>"inertiaTensor"</code> property is an array of 9 numbers that defines the inertia tensor 3x3 matrix of the body in kilogram meter squared (kg⋅m²). We specify "tensor" in the name because this defines inertia in multiple directions and is different from linear momentum inertia. Only "rigid" and "vehicle" body types can make use of inertia. If zero or not specified, the inertia should be automatically calculated by the physics engine.</p>
 <p>The inertia tensor matrix is a symmetric matrix. The inertia matrix represents the mass distribution of the body and determines how hard the body is to rotate. The values on the diagonal represent the inertia around the 3 principle axes (X, Y, Z), while the values not on the diagonal represent the 3 coupling values between the axes (XY, XZ, YZ). For more information, refer to the Wikipedia article.</p>

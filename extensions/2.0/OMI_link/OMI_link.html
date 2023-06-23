@@ -90,34 +90,34 @@
 <p>Open Metaverse Interoperability Group Stage 1 Proposal</p>
 <h2 id="dependencies">Dependencies</h2>
 <p>Written against the glTF 2.0 spec.</p>
-<p>This extension specification currently depends on the draft OMI_collider extension.</p>
+<p>Optionally depends on the <code>OMI_physics_body</code> spec for triggers.</p>
 <h2 id="overview">Overview</h2>
 <p>This extension allows for objects to add world traversal behavior in the form of links. This specification does not contain any definitions in how the link data is used and it is up to the client builder to decide how the link is activated.</p>
-<p>Currently this spec depends on the OMI_collider spec. The OMI_collider extension must be attached to the same node as an OMI_link. The client may decide to use the collider for activating the link behavior on click and/or on collision. If OMI_collider is not defined on the node the link the behavior is undefined and can be ignored.</p>
+<p>In addition to being defined independently, the <code>OMI_link</code> extension can be defined on an <code>OMI_physics_body</code> node with the type set to trigger. When <code>OMI_link</code> is on a trigger, the trigger should be treated as an activator for the link, such that a player activating that trigger should cause that player to activate the link.</p>
 <p>Clients may choose to have application-specific behaviors for URIs otherwise the default platform / browser URI handler should be used. Applications should perform any necessary URI security checks and may decide to present a dialog to inform the user of how the URI is handled.</p>
 <h3 id="example">Example:</h3>
 <div class="sourceCode" id="cb1"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="fu">{</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a>  <span class="dt">&quot;scenes&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a>    <span class="fu">{</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a>      <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Default Scene&quot;</span><span class="fu">,</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a>      <span class="dt">&quot;nodes&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="dv">0</span><span class="ot">]</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a>    <span class="fu">}</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a>  <span class="ot">]</span><span class="fu">,</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a>  <span class="dt">&quot;nodes&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a>    <span class="fu">{</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a>      <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;OMI Group meetup space&quot;</span><span class="fu">,</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true"></a>      <span class="dt">&quot;translation&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="fl">1.0</span><span class="ot">,</span> <span class="fl">2.0</span><span class="ot">,</span> <span class="fl">3.0</span><span class="ot">]</span><span class="fu">,</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true"></a>      <span class="dt">&quot;extensions&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true"></a>        <span class="dt">&quot;OMI_link&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true"></a>          <span class="dt">&quot;title&quot;</span><span class="fu">:</span> <span class="st">&quot;Meetup World&quot;</span><span class="fu">,</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true"></a>          <span class="dt">&quot;uri&quot;</span><span class="fu">:</span> <span class="st">&quot;https://omigroup.org/worlds/meetup&quot;</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true"></a>        <span class="fu">},</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true"></a>        <span class="dt">&quot;OMI_collider&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true"></a>          <span class="er">...</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true"></a>        <span class="fu">}</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true"></a>      <span class="fu">}</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true"></a>    <span class="fu">}</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true"></a>  <span class="ot">]</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a>    <span class="dt">&quot;scenes&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a>        <span class="fu">{</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a>            <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Default Scene&quot;</span><span class="fu">,</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a>            <span class="dt">&quot;nodes&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="dv">0</span><span class="ot">]</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a>        <span class="fu">}</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a>    <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a>    <span class="dt">&quot;nodes&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a>        <span class="fu">{</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a>            <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;OMI Group meetup space&quot;</span><span class="fu">,</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true"></a>            <span class="dt">&quot;translation&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="fl">1.0</span><span class="ot">,</span> <span class="fl">2.0</span><span class="ot">,</span> <span class="fl">3.0</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true"></a>            <span class="dt">&quot;extensions&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true"></a>                <span class="dt">&quot;OMI_link&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true"></a>                    <span class="dt">&quot;title&quot;</span><span class="fu">:</span> <span class="st">&quot;Meetup World&quot;</span><span class="fu">,</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true"></a>                    <span class="dt">&quot;uri&quot;</span><span class="fu">:</span> <span class="st">&quot;https://omigroup.org/worlds/meetup&quot;</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true"></a>                <span class="fu">},</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true"></a>                <span class="dt">&quot;OMI_physics_body&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true"></a>                    <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;trigger&quot;</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true"></a>                <span class="fu">}</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true"></a>            <span class="fu">}</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true"></a>        <span class="fu">}</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true"></a>    <span class="ot">]</span></span>
 <span id="cb1-23"><a href="#cb1-23" aria-hidden="true"></a><span class="fu">}</span></span></code></pre></div>
 <h2 id="gltf-schema-updates">glTF Schema Updates</h2>
 <h3 id="uri"><code>uri</code></h3>

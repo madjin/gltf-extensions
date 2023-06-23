@@ -87,11 +87,11 @@
 <p>Open Metaverse Interoperability Group Stage 2 Proposal</p>
 <h2 id="dependencies">Dependencies</h2>
 <p>Written against the glTF 2.0 spec.</p>
-<p>Optionally depends on the <code>OMI_collider</code> and <code>OMI_physics_body</code> specs for triggers.</p>
+<p>Optionally depends on the <code>OMI_physics_body</code> spec for triggers.</p>
 <h2 id="overview">Overview</h2>
 <p>This extension allows defining a glTF node as a seat which a humanoid character can sit on.</p>
 <p>A seat is defined by specifying the back, foot, and knee positions on the seat from which can be derived the IK positions and directions for placing a humanoid character on that seat. Optionally, the angle between the upper leg and spine can also be defined. This definition supports seats placed in any orientation and supports characters of any size sitting on them.</p>
-<p>In addition to being defined independently, the <code>OMI_seat</code> extension can be defined on either a <code>OMI_physics_body</code> node with the type set to trigger, or in the case of a trigger collider without a trigger body, on a <code>OMI_collider</code> node with isTrigger set to true. Only one definition of <code>OMI_seat</code> is allowed per trigger body, so if a trigger collider node is part of a trigger body, you MUST NOT define <code>OMI_seat</code> on that collider node. When <code>OMI_seat</code> is on a trigger, the trigger should be treated as entry for the seat, such that a player activating that trigger should cause that player to enter the seat.</p>
+<p>In addition to being defined independently, the <code>OMI_seat</code> extension can be defined on an <code>OMI_physics_body</code> node with the type set to trigger. When <code>OMI_seat</code> is on a trigger, the trigger should be treated as an entry for the seat, such that a player activating that trigger should cause that player to enter the seat.</p>
 <p>Alternate seated positions, such as a tiny character with straight legs on top of the seat, or a character with their legs crossed on top of the seat, are not the recommended use cases of the seat definition, but are not forbidden if an app wants a character to sit in an unusual position. The primary purpose of this spec is to define the seat itself; how characters sit on that seat is secondary, and the fine details are up to the implementation.</p>
 <p>This extension does not define any animations for entering or exiting the seat. It also does not define anything that a character's arms, head, tail, or chest should be doing, it only defines information about the seat itself intended to be used to place the legs on the seat.</p>
 <h3 id="example">Example:</h3>
