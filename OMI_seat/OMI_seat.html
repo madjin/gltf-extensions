@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../table2.css" />
+</head>
+<body>
+<h1 id="omi_seat">OMI_seat</h1>
+<h2 id="contributors">Contributors</h2>
+<ul>
+<li>Aaron Franke, The Mirror Megaverse Inc.</li>
+</ul>
+<h2 id="status">Status</h2>
+<p>Open Metaverse Interoperability Group Stage 2 Proposal</p>
+<h2 id="dependencies">Dependencies</h2>
+<p>Written against the glTF 2.0 spec.</p>
+<p>Optionally depends on the <code>OMI_physics_body</code> spec for triggers.</p>
+<h2 id="overview">Overview</h2>
+<p>This extension allows defining a glTF node as a seat which a humanoid character can sit on.</p>
+<p>A seat is defined by specifying the back, foot, and knee positions on the seat from which can be derived the IK positions and directions for placing a humanoid character on that seat. Optionally, the angle between the upper leg and spine can also be defined. This definition supports seats placed in any orientation and supports characters of any size sitting on them.</p>
+<p>In addition to being defined independently, the <code>OMI_seat</code> extension can be defined on an <code>OMI_physics_body</code> node with the type set to trigger. When <code>OMI_seat</code> is on a trigger, the trigger should be treated as an entry for the seat, such that a player activating that trigger should cause that player to enter the seat.</p>
+<p>Alternate seated positions, such as a tiny character with straight legs on top of the seat, or a character with their legs crossed on top of the seat, are not the recommended use cases of the seat definition, but are not forbidden if an app wants a character to sit in an unusual position. The primary purpose of this spec is to define the seat itself; how characters sit on that seat is secondary, and the fine details are up to the implementation.</p>
+<p>This extension does not define any animations for entering or exiting the seat. It also does not define anything that a character's arms, head, tail, or chest should be doing, it only defines information about the seat itself intended to be used to place the legs on the seat.</p>
+<h3 id="example">Example:</h3>
+<p>This example defines a seat using a simple chair facing positive Z. This is the same as the <code>simple_chair_pos_z.gltf</code> example, but without the mesh data.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="fu">{</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a>    <span class="dt">&quot;asset&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a>        <span class="dt">&quot;version&quot;</span><span class="fu">:</span> <span class="st">&quot;2.0&quot;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a>    <span class="fu">},</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a>    <span class="dt">&quot;extensionsUsed&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a>        <span class="st">&quot;OMI_seat&quot;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a>    <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a>    <span class="dt">&quot;nodes&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a>        <span class="fu">{</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a>            <span class="dt">&quot;mesh&quot;</span><span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true"></a>            <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;SimpleChairMesh&quot;</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true"></a>        <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true"></a>        <span class="fu">{</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true"></a>            <span class="dt">&quot;children&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true"></a>                <span class="dv">0</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true"></a>            <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true"></a>            <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;SimpleChairPosZ&quot;</span><span class="fu">,</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true"></a>            <span class="dt">&quot;extensions&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true"></a>                <span class="dt">&quot;OMI_seat&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true"></a>                    <span class="dt">&quot;back&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="dv">0</span><span class="ot">,</span> <span class="fl">0.33</span><span class="ot">,</span> <span class="fl">-0.24</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true"></a>                    <span class="dt">&quot;foot&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="dv">0</span><span class="ot">,</span> <span class="fl">-0.25</span><span class="ot">,</span> <span class="fl">0.3</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true"></a>                    <span class="dt">&quot;knee&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="dv">0</span><span class="ot">,</span> <span class="fl">0.33</span><span class="ot">,</span> <span class="fl">0.3</span><span class="ot">]</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true"></a>                <span class="fu">}</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true"></a>            <span class="fu">}</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true"></a>        <span class="fu">}</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true"></a>    <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true"></a>    <span class="dt">&quot;scene&quot;</span><span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true"></a>    <span class="dt">&quot;scenes&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="fu">{</span> <span class="dt">&quot;nodes&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="dv">1</span><span class="ot">]</span> <span class="fu">}</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true"></a><span class="fu">}</span></span></code></pre></div>
+<p>More example assets can be found in the <a href="examples/">examples/</a> folder.</p>
+<h2 id="gltf-schema-updates">glTF Schema Updates</h2>
+<p>This extension consists of one new data structure for defining the seat limits, <code>"OMI_seat"</code>. The key <code>"OMI_seat"</code> can be added to the node-level <code>"extensions"</code> of a glTF node to define a seat.</p>
+<p>The extension must also be added to the glTF's <code>extensionsUsed</code> array and because it is optional, it does not need to be added to the <code>extensionsRequired</code> array.</p>
+<h3 id="property-summary">Property Summary</h3>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>Type</th>
+<th>Description</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>back</strong></td>
+<td><code>number[3]</code></td>
+<td>The position limit on the seat corresponding to the character's back in local space.</td>
+<td>Required, no default</td>
+</tr>
+<tr class="even">
+<td><strong>foot</strong></td>
+<td><code>number[3]</code></td>
+<td>The position limit on the seat corresponding to the character's feet in local space.</td>
+<td>Required, no default</td>
+</tr>
+<tr class="odd">
+<td><strong>knee</strong></td>
+<td><code>number[3]</code></td>
+<td>The base position on the seat corresponding to the character's knees in local space.</td>
+<td>Required, no default</td>
+</tr>
+<tr class="even">
+<td><strong>angle</strong></td>
+<td><code>number</code></td>
+<td>The angle between the spine and back-knee line in radians.</td>
+<td>1.570796... (τ/4 or π/2 rad, 90 deg)</td>
+</tr>
+</tbody>
+</table>
+<p>To avoid confusion with different standards of which direction is the forward direction, we define the forward direction by the direction from the back position to the knee position. The up direction is a vector perpendicular to the forward direction such that the direction from the knee to the foot points down. The back, foot, and knee positions should not be colinear or nearly colinear.</p>
+<h3 id="back">Back</h3>
+<p>The <code>"back"</code> property is a vector as a three-number array that defines the position limit of the character's back and hips in local space.</p>
+<p>The character's upper leg (thigh) bones are typically placed on lines parallel to the line between the knee and back points, with the lines offset upward based on the thickness of the upper leg and offset to the side based on the desired distance between each leg. If the upper leg is smaller than this line, then the knees are aligned with the knee point, and the hips are moved forward in-between the knee and back points. If the upper leg is larger than this line, then the hips are aligned with the back point, the knees are moved forward farther than the knee point. The knees may also be moved up depending on the foot-knee constraint.</p>
+<h3 id="foot">Foot</h3>
+<p>The <code>"foot"</code> property is a vector as a three-number array that defines the position limit of the character's feet and lower legs in local space.</p>
+<p>The character's lower leg (calf) bones are typically placed on lines parallel to the line between the knee and foot points, with the lines offset forward based on the thickness of the lower leg and offset to the side based on the desired distance between each leg. If the lower leg is smaller than this line, then the knees are aligned with the knee point, and the feet are moved upward in-between the knee and back points. If the lower leg is larger than this line, then the feet are aligned with the foot point, and the knee is moved upward farther than the knee point. The knees may also be moved forward depending on the back-knee constraint.</p>
+<h3 id="knee">Knee</h3>
+<p>The <code>"knee"</code> property is a vector as a three-number array that defines the base position of the character's knees in local space.</p>
+<h3 id="angle">Angle</h3>
+<p>The <code>"angle"</code> property is a number that defines the angle between the spine and the line connecting the back and knee positions. If not specified, the default value is <code>1.57079632679489662</code> or τ/4 or π/2, which is 90 degrees represented in radians.</p>
+<p>This is an angle instead of a position because:</p>
+<ul>
+<li>We want to support cases where the character in the seat is smaller than the seat, in which case the hips may be far from the back position in order to place the knees at the knee vector, and the angle between the hips and an upper position would change. Instead we just want to define which direction the spine points.</li>
+<li>We do not want to define the upper bound of a seat. A seat should support arbitrarily large characters (if an app wants to limit character size, that's an application-specific constraint beyond the scope of seats), and there is no way to IK a large character within such a constraint without breaking their back or violating other constraints, unlike with the foot/knee/back position.</li>
+<li>We want to make this optional for simple use cases. Defining an angle between the spine and back-knee line is unnecessary information for most office chairs, dinner table chairs, and seats without a solid back.</li>
+</ul>
+<p>This property only needs to be defined when the desired angle between the spine and back-knee line is not 90 degrees. For example, a reclining chair that has a back tilted so the character could lie back should have this defined.</p>
+<h3 id="property-details">Property Details</h3>
+<p>The positions defined above can be used to uniquely find other vectors used to place a character on the seat.</p>
+<ul>
+<li>The upper leg main direction is the direction from the back vector to the knee vector. This is also the forward direction.</li>
+<li>The lower leg main direction is the direction from the knee vector to the foot vector.</li>
+<li>The right direction is the normalized cross product of the lower leg main direction and the upper leg main direction.</li>
+<li>The upper leg up direction is the cross product of the right direction and the upper leg main direction.</li>
+<li>The lower leg forward direction is the cross product of the right direction and the lower leg main direction.</li>
+<li>The spine direction can be found by rotating the upper leg main direction around the right vector by the angle property.</li>
+</ul>
+<p>These are the directions of the seat itself, the actual directions a character ends up at may be different. The specifics of this depend on the IK system used. However, one common feature is the need to offset from the seat based on the thickness of the legs in order to determine the points to use for IK, so that we avoid the character's legs being inside of the seat itself.</p>
+<ul>
+<li>The IK position for the back/hips/spine is the back position, plus the upper leg thickness times the upper leg up direction, plus the spine thickness times the upper leg main direction.</li>
+<li>The IK position for the feet is the foot position, plus the lower leg thickness times the lower leg forward direction, minus the foot thickness times the lower leg main direction.</li>
+<li>The IK position for the knees is more complicated. It needs to be adjusted by both the upper leg and lower leg offsets. For perpendicular upper and lower legs, this is trivial, you just add the vectors together. Otherwise some trigonometry is required. The knee offset can be found by adding the upper leg offset with the upper leg direction multiplied by an adjustment scalar. The adjustment scalar can be found with the lower offset length divided by the sin of the angle between the legs, minus the upper offset length divided by the tan of the angle between the legs.</li>
+</ul>
+<p>In a nutshell, the legs sit as close to the seat as possible while not clipping though it, therefore we offset by the leg thickness, otherwise the leg bones would be exactly on the seat's surface. We want to keep the seat's points exactly on the seat and have the character legs offset from the seat's points so that we don't play favorites for any particular leg size.</p>
+<h3 id="json-schema">JSON Schema</h3>
+<p>See <a href="schema/node.OMI_seat.schema.json">schema/node.OMI_seat.schema.json</a> for the schema.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="fu">{</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>    <span class="dt">&quot;$schema&quot;</span><span class="fu">:</span> <span class="st">&quot;http://json-schema.org/draft-04/schema&quot;</span><span class="fu">,</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a>    <span class="dt">&quot;title&quot;</span><span class="fu">:</span> <span class="st">&quot;OMI_seat glTF Node Extension&quot;</span><span class="fu">,</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a>    <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;object&quot;</span><span class="fu">,</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a>    <span class="dt">&quot;required&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a>        <span class="st">&quot;back&quot;</span><span class="ot">,</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a>        <span class="st">&quot;foot&quot;</span><span class="ot">,</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true"></a>        <span class="st">&quot;knee&quot;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true"></a>    <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true"></a>    <span class="dt">&quot;properties&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true"></a>        <span class="dt">&quot;back&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true"></a>            <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;array&quot;</span><span class="fu">,</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true"></a>            <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;Three number array defining the seat position corresponding to the character&#39;s back position limit in local space.&quot;</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true"></a>        <span class="fu">},</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true"></a>        <span class="dt">&quot;foot&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true"></a>            <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;array&quot;</span><span class="fu">,</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true"></a>            <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;Three number array defining the seat position corresponding to the character&#39;s feet position limit in local space.&quot;</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true"></a>        <span class="fu">},</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true"></a>        <span class="dt">&quot;knee&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true"></a>            <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;array&quot;</span><span class="fu">,</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true"></a>            <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;Three number array defining the seat position corresponding to the character&#39;s knee base position in local space.&quot;</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true"></a>        <span class="fu">},</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true"></a>        <span class="dt">&quot;angle&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true"></a>            <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;number&quot;</span><span class="fu">,</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true"></a>            <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;The angle between the spine and back-knee line in radians.&quot;</span><span class="fu">,</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true"></a>            <span class="dt">&quot;default&quot;</span><span class="fu">:</span> <span class="fl">1.57079632679489662</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true"></a>        <span class="fu">}</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true"></a>    <span class="fu">}</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true"></a><span class="fu">}</span></span></code></pre></div>
+<h2 id="known-implementations">Known Implementations</h2>
+<ul>
+<li>Godot Engine add-on</li>
+</ul>
+<h2 id="resources">Resources:</h2>
+<ul>
+<li>None</li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../table2.css" />
+</head>
+<body>
+<h1 id="omi_spawn_point">OMI_spawn_point</h1>
+<h2 id="contributors">Contributors</h2>
+<ul>
+<li>OMI glTF Extensions Group</li>
+<li>Robert Long, The Matrix.org Foundation</li>
+<li>Anthony Burchell, Individual Contributor</li>
+<li>Aaron Franke, The Mirror Megaverse Inc.</li>
+</ul>
+<h2 id="status">Status</h2>
+<p>Draft Specification</p>
+<p>Open Metaverse Interoperability Group Stage 1 Proposal</p>
+<h2 id="dependencies">Dependencies</h2>
+<p>Written against the glTF 2.0 spec.</p>
+<h2 id="overview">Overview</h2>
+<p>The OMI_spawn_point extension allows you to specify a spawn point in a glTF scene, which is a place where spawnable objects can be created, such as characters. This extension can be used on game maps to mark a room or any other location as a spawn point by placing an OMI_spawn_point glTF node at the desired location. This can be useful for VR or AR experiences, where the viewer's starting position and orientation can have a significant impact on the overall experience.</p>
+<h3 id="example">Example</h3>
+<p>To use the "OMI_spawn_point" extension, you must first specify it in the extensionsUsed property of your glTF file.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="fu">{</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a>    <span class="dt">&quot;extensionsUsed&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;OMI_spawn_point&quot;</span><span class="ot">]</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a><span class="fu">}</span></span></code></pre></div>
+<p>Next, apply the extension to a child node of the glTF file. The node's position and rotation data can be used to determine the location of the spawn point in the scene.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="fu">{</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>    <span class="dt">&quot;nodes&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a>        <span class="fu">{</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a>            <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;spawn_point_node&quot;</span><span class="fu">,</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a>            <span class="dt">&quot;translation&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="dv">0</span><span class="ot">,</span> <span class="dv">0</span><span class="ot">,</span> <span class="dv">1</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a>            <span class="dt">&quot;rotation&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="dv">0</span><span class="ot">,</span> <span class="dv">0</span><span class="ot">,</span> <span class="dv">0</span><span class="ot">,</span> <span class="dv">1</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a>            <span class="dt">&quot;extensions&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true"></a>                <span class="dt">&quot;OMI_spawn_point&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true"></a>                    <span class="dt">&quot;title&quot;</span><span class="fu">:</span> <span class="st">&quot;Hill East&quot;</span><span class="fu">,</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true"></a>                    <span class="dt">&quot;team&quot;</span><span class="fu">:</span> <span class="st">&quot;Red&quot;</span><span class="fu">,</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true"></a>                    <span class="dt">&quot;group&quot;</span><span class="fu">:</span> <span class="st">&quot;Hill&quot;</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true"></a>                <span class="fu">}</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true"></a>            <span class="fu">}</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true"></a>        <span class="fu">}</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true"></a>    <span class="ot">]</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true"></a><span class="fu">}</span></span></code></pre></div>
+<p>In the example above, the "OMI_spawn_point" extension is applied to a node named "spawn_point_node". The node's position and rotation data can be used to determine the location of the spawn point in the scene. The title, team, and group properties are optional and can be used to provide additional information about the spawn point.</p>
+<h2 id="properties">Properties</h2>
+<p>All of the properties are optional. An empty JSON object is a valid spawn point. All properties have a default value of null.</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>title</strong></td>
+<td><code>string</code></td>
+<td>The title of the spawn point. This can be used as a user-facing name for the spawn point.</td>
+</tr>
+<tr class="even">
+<td><strong>team</strong></td>
+<td><code>string</code></td>
+<td>The team that the spawn point is associated with. Ex: "Red", "Blue", "Humans", "Aliens", "Axis", "Allies".</td>
+</tr>
+<tr class="odd">
+<td><strong>group</strong></td>
+<td><code>string</code></td>
+<td>The group that the spawn point is associated with. This can be used to combine together related spawn points.</td>
+</tr>
+</tbody>
+</table>
+<p>How each application decides to use the properties, or if they are used at all, is up to that specific implementation's needs.</p>
+<ul>
+<li>A game that does not display a menu for spawning does not have to display the title.</li>
+<li>A game that displays a menu for spawning can generate custom text from the team, group, and/or node name if the title is not specified.</li>
+<li>A game with no teams does not need to read or use the team property.</li>
+<li>A game with teams can consider a spawn point without a team assigned as a fallback for when a player is not on a team.</li>
+<li>A game with no reason to group together spawn points can ignore the group property.</li>
+</ul>
+<h3 id="json-schema">JSON Schema</h3>
+<p>The OMI_spawn_point extension is defined by the following JSON schema:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="fu">{</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a>    <span class="dt">&quot;$schema&quot;</span><span class="fu">:</span> <span class="st">&quot;http://json-schema.org/draft-07/schema#&quot;</span><span class="fu">,</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a>    <span class="dt">&quot;title&quot;</span><span class="fu">:</span> <span class="st">&quot;OMI_spawn_point&quot;</span><span class="fu">,</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a>    <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;An extension for the glTF format that defines a spawn point in a scene.&quot;</span><span class="fu">,</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a>    <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;object&quot;</span><span class="fu">,</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true"></a>    <span class="dt">&quot;properties&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true"></a>        <span class="dt">&quot;title&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true"></a>            <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;string&quot;</span><span class="fu">,</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true"></a>            <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;The title of the spawn point.&quot;</span><span class="fu">,</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true"></a>            <span class="dt">&quot;maxLength&quot;</span><span class="fu">:</span> <span class="dv">128</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true"></a>        <span class="fu">},</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true"></a>        <span class="dt">&quot;team&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true"></a>            <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;string&quot;</span><span class="fu">,</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true"></a>            <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;The team that this spawn point belongs to, if any.&quot;</span><span class="fu">,</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true"></a>            <span class="dt">&quot;maxLength&quot;</span><span class="fu">:</span> <span class="dv">128</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true"></a>        <span class="fu">},</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true"></a>        <span class="dt">&quot;group&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true"></a>            <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;string&quot;</span><span class="fu">,</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true"></a>            <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;The group that this spawn point belongs to, if any.&quot;</span><span class="fu">,</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true"></a>            <span class="dt">&quot;maxLength&quot;</span><span class="fu">:</span> <span class="dv">128</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true"></a>        <span class="fu">}</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true"></a>    <span class="fu">}</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true"></a><span class="fu">}</span></span></code></pre></div>
+<p>Example Three.js implementation - probably not to be included in final proposal</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="co">// Create a new Three.js scene</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a><span class="kw">const</span> scene <span class="op">=</span> <span class="kw">new</span> THREE<span class="op">.</span><span class="fu">Scene</span>()<span class="op">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a><span class="co">// Set up a perspective camera</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a><span class="kw">const</span> camera <span class="op">=</span> <span class="kw">new</span> THREE<span class="op">.</span><span class="fu">PerspectiveCamera</span>(</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a>    <span class="dv">75</span><span class="op">,</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a>    <span class="bu">window</span><span class="op">.</span><span class="at">innerWidth</span> <span class="op">/</span> <span class="bu">window</span><span class="op">.</span><span class="at">innerHeight</span><span class="op">,</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true"></a>    <span class="fl">0.1</span><span class="op">,</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true"></a>    <span class="dv">1000</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true"></a>)<span class="op">;</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true"></a><span class="co">// Load the glTF file</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true"></a><span class="kw">const</span> gltfLoader <span class="op">=</span> <span class="kw">new</span> THREE<span class="op">.</span><span class="fu">GLTFLoader</span>()<span class="op">;</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true"></a>gltfLoader<span class="op">.</span><span class="fu">load</span>(<span class="st">&#39;my-omi-spawn-file.gltf&#39;</span><span class="op">,</span> (gltf) <span class="kw">=&gt;</span> {</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true"></a>    <span class="co">// Add the scene from the glTF file to the Three.js scene</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true"></a>    scene<span class="op">.</span><span class="fu">add</span>(gltf<span class="op">.</span><span class="at">scene</span>)<span class="op">;</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true"></a></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true"></a>    <span class="co">// Find the &quot;OMI_spawn_point&quot; node</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true"></a>    <span class="kw">let</span> spawnPointNode <span class="op">=</span> <span class="kw">null</span><span class="op">;</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true"></a>    scene<span class="op">.</span><span class="fu">traverse</span>((node) <span class="kw">=&gt;</span> {</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true"></a>        <span class="cf">if</span> (node<span class="op">.</span><span class="at">isObject3D</span> <span class="op">&amp;&amp;</span> node<span class="op">.</span><span class="at">userData</span><span class="op">.</span><span class="at">OMI_spawn_point</span>) {</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true"></a>            spawnPointNode <span class="op">=</span> node<span class="op">;</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true"></a>        }</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true"></a>    })<span class="op">;</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true"></a></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true"></a>    <span class="co">// Set the position of the camera to the spawn point position from the source node data.</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true"></a>    <span class="cf">if</span> (spawnPointNode) {</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true"></a>        camera<span class="op">.</span><span class="at">position</span><span class="op">.</span><span class="fu">copy</span>(spawnPointNode<span class="op">.</span><span class="at">position</span>)<span class="op">;</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true"></a>    }</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true"></a>})<span class="op">;</span></span></code></pre></div>
+<h2 id="known-implementations">Known Implementations</h2>
+<p>Interested Implementations:</p>
+<ul>
+<li>INTERESTED AND PENDING - Third Room - <a href="https://github.com/thirdroom/thirdroom">https://github.com/thirdroom/thirdroom</a></li>
+<li>INTERESTED AND PENDING - Three Object Viewer (WordPress Plugin) - <a href="https://wordpress.org/plugins/three-object-viewer/">https://wordpress.org/plugins/three-object-viewer/</a></li>
+<li>NOT YET PUBLIC - The Mirror <a href="https://www.themirror.space/">https://www.themirror.space/</a></li>
+</ul>
+</body>
+</html>

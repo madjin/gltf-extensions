@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../table2.css" />
+</head>
+<body>
+<h1 id="omi_physics_shape">OMI_physics_shape</h1>
+<h2 id="contributors">Contributors</h2>
+<ul>
+<li>Aaron Franke, The Mirror Megaverse Inc.</li>
+<li>Robert Long, The Matrix.org Foundation</li>
+<li>Mauve Signweaver, Mauve Software Inc.</li>
+</ul>
+<h2 id="status">Status</h2>
+<p>Open Metaverse Interoperability Group Stage 1 Proposal</p>
+<h2 id="dependencies">Dependencies</h2>
+<p>Written against the glTF 2.0 spec.</p>
+<p>Does nothing on its own. Designed to be used together with the <code>OMI_physics_body</code> spec.</p>
+<h2 id="overview">Overview</h2>
+<p>Physics shapes can be added to glTF nodes along with information about the "type" of shape it is representing.</p>
+<p>This extension allows specifying physics shapes to be used in glTF scenes. <code>OMI_physics_shape</code> can be added to glTF nodes, which references the document-level list of physics shapes. They are meant to be used by <code>OMI_physics_body</code>. Without a body or another extension using it, this extension does not mandate any particular behavior for the nodes aside from their geometric shape. The precise usage of these physics shape primitives SHOULD be specified by the extenions which utilize them. In general, these physics shapes are used to specify geometry which can be used for collision detection.</p>
+<p>The <code>OMI_physics_body</code> extension specifes the behavior of attached shapes, including static, kinematic, rigid, and non-solid triggers. Implementations MUST also implement <code>OMI_physics_body</code> to determine the behavior of the shapes, or else the shapes do not have defined behavior. Even for a scene with physics shapes that do not move, the body extension contains crucial information about how the shape should be treated, notably whether the shape is solid or not (a trigger body's shapes are not solid).</p>
+<h3 id="example">Example:</h3>
+<p>This example defines a single box shape with a size of 1 meter in all dimensions as a child of a static body:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="fu">{</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a>    <span class="dt">&quot;asset&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a>        <span class="dt">&quot;version&quot;</span><span class="fu">:</span> <span class="st">&quot;2.0&quot;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a>    <span class="fu">},</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a>    <span class="dt">&quot;extensions&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a>        <span class="dt">&quot;OMI_physics_shape&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a>            <span class="dt">&quot;shapes&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a>                <span class="fu">{</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a>                    <span class="dt">&quot;size&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="dv">1</span><span class="ot">,</span> <span class="dv">1</span><span class="ot">,</span> <span class="dv">1</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a>                    <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;box&quot;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true"></a>                <span class="fu">}</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true"></a>            <span class="ot">]</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true"></a>        <span class="fu">}</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true"></a>    <span class="fu">},</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true"></a>    <span class="dt">&quot;extensionsUsed&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true"></a>        <span class="st">&quot;OMI_physics_body&quot;</span><span class="ot">,</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true"></a>        <span class="st">&quot;OMI_physics_shape&quot;</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true"></a>    <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true"></a>    <span class="dt">&quot;nodes&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true"></a>        <span class="fu">{</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true"></a>            <span class="dt">&quot;children&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="dv">1</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true"></a>            <span class="dt">&quot;extensions&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true"></a>                <span class="dt">&quot;OMI_physics_body&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true"></a>                    <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;static&quot;</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true"></a>                <span class="fu">}</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true"></a>            <span class="fu">},</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true"></a>            <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;StaticBox&quot;</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true"></a>        <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true"></a>        <span class="fu">{</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true"></a>            <span class="dt">&quot;extensions&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true"></a>                <span class="dt">&quot;OMI_physics_shape&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true"></a>                    <span class="dt">&quot;shape&quot;</span><span class="fu">:</span> <span class="dv">0</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true"></a>                <span class="fu">}</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true"></a>            <span class="fu">},</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true"></a>            <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;BoxShape&quot;</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true"></a>        <span class="fu">}</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true"></a>    <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true"></a>    <span class="dt">&quot;scene&quot;</span><span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true"></a>    <span class="dt">&quot;scenes&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true"></a>        <span class="fu">{</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true"></a>            <span class="dt">&quot;nodes&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="dv">0</span><span class="ot">]</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true"></a>        <span class="fu">}</span></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true"></a>    <span class="ot">]</span></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true"></a><span class="fu">}</span></span></code></pre></div>
+<p>More example assets can be found in the <a href="examples/">examples/</a> folder.</p>
+<h2 id="gltf-schema-updates">glTF Schema Updates</h2>
+<p>This extension consists of three new data structures for defining physics shapes on the root glTF document and referencing them on a glTF node. The main data structure defines a physics shape and is what most of this document describes. The second data structure uses the key <code>"OMI_physics_shape"</code> in the document-level <code>"extensions"</code> which contains a list of the main physics shape data structures. The third data structure uses the key <code>"OMI_physics_shape"</code> in the node-level <code>"extensions"</code> which contains an index of the physics shape to use from the list document-level physics shape list.</p>
+<p>The extension must also be added to the glTF's <code>extensionsUsed</code> array and because it is optional, it does not need to be added to the <code>extensionsRequired</code> array.</p>
+<h3 id="property-summary">Property Summary</h3>
+<p>The rest of the document, including this summary, defines the properties for the main data structure.</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>Type</th>
+<th>Description</th>
+<th>Default value</th>
+<th>Valid on</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>type</strong></td>
+<td><code>string</code></td>
+<td>The type of the physics shape as a string.</td>
+<td>Required, no default</td>
+<td>Always valid</td>
+</tr>
+<tr class="even">
+<td><strong>size</strong></td>
+<td><code>number[3]</code></td>
+<td>The size of the box shape in meters.</td>
+<td>[1.0, 1.0, 1.0]</td>
+<td>Box</td>
+</tr>
+<tr class="odd">
+<td><strong>radius</strong></td>
+<td><code>number</code></td>
+<td>The radius of the shape in meters.</td>
+<td>0.5</td>
+<td>Sphere, capsule, cylinder</td>
+</tr>
+<tr class="even">
+<td><strong>height</strong></td>
+<td><code>number</code></td>
+<td>The height of the shape in meters.</td>
+<td>2.0</td>
+<td>Capsule, cylinder</td>
+</tr>
+<tr class="odd">
+<td><strong>mesh</strong></td>
+<td><code>number</code></td>
+<td>The index of the glTF mesh in the document to use as a trimesh shape.</td>
+<td>-1</td>
+<td>Trimesh, hull</td>
+</tr>
+</tbody>
+</table>
+<h3 id="shape-types">Shape Types</h3>
+<p>The <code>"type"</code> property is a lowercase string that defines what type of shape this physics shape is.</p>
+<p>The selection of shapes was carefully chosen with a balance of compatibility between major game engines and containing the most commonly used shapes for easy asset creation. Physics shapes inherit the transform of the glTF node they are attached to. This includes rotation and translation, however it is discouraged to scale physics shape nodes since this can cause problems in some physics engines.</p>
+<p>Here is a table listing the mapping between the <code>OMI_physics_shape</code> type and the equivalent types in major game engines.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Shape</th>
+<th>Unity</th>
+<th>Unreal</th>
+<th>Godot</th>
+<th>Blender</th>
+<th>Bullet (Ammo, Panda3D, etc)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Box</td>
+<td>Box</td>
+<td>Box</td>
+<td>BoxShape3D</td>
+<td>Box</td>
+<td>Box Shape</td>
+</tr>
+<tr class="even">
+<td>Sphere</td>
+<td>Sphere</td>
+<td>Sphere</td>
+<td>SphereShape3D</td>
+<td>Sphere</td>
+<td>Sphere Shape</td>
+</tr>
+<tr class="odd">
+<td>Capsule</td>
+<td>Capsule</td>
+<td>Capsule</td>
+<td>CapsuleShape3D</td>
+<td>Capsule</td>
+<td>Capsule Shape</td>
+</tr>
+<tr class="even">
+<td>Cylinder</td>
+<td>Approximation</td>
+<td>Approximation</td>
+<td>CylinderShape3D</td>
+<td>Cylinder</td>
+<td>Cylinder Shape</td>
+</tr>
+<tr class="odd">
+<td>Hull</td>
+<td>Mesh (Convex)</td>
+<td>Convex</td>
+<td>ConvexPolygonShape3D</td>
+<td>Convex Hull</td>
+<td>Convex Shape</td>
+</tr>
+<tr class="even">
+<td>Trimesh</td>
+<td>Mesh</td>
+<td>Mesh</td>
+<td>ConcavePolygonShape3D</td>
+<td>Mesh</td>
+<td>Mesh Shape</td>
+</tr>
+</tbody>
+</table>
+<h4 id="box">Box</h4>
+<p>Box shapes describe a cube or cuboid shape. They have <code>size</code> property which is an array of 3 numbers that describes the width, height, and depth. If the <code>size</code> property is omitted, the default size is <code>[1, 1, 1]</code>, representing a cube with a volume of one cubic meter, edges/diameters one meter long, and extents/radius of half a meter. The position of the glTF node is the center of the box shape.</p>
+<h4 id="sphere">Sphere</h4>
+<p>Sphere shapes describe a uniform "ball" shape. They have a <code>radius</code> property which is a single number. If the <code>radius</code> property is omitted, the default radius is <code>0.5</code>, representing a sphere with a radius of half a meter, a diameter of one meter. The position of the glTF node is the center of the sphere shape.</p>
+<h4 id="capsule">Capsule</h4>
+<p>Capsule shapes describe a "pill" shape. They have a <code>radius</code> and <code>height</code> property. The height is aligned with the node's local vertical axis. If you wish to align it along a different axis, rotate the glTF node. If the <code>radius</code> property is omitted, the default radius is <code>0.5</code>, and if the <code>height</code> property is omitted, the default height is <code>2.0</code>. The height describes the total height from bottom to top. The height of the capsule must be at least twice as much as the radius. The "mid-height" between the centers of each spherical cap end can be found with <code>height - radius * 2.0</code>.</p>
+<h4 id="cylinder">Cylinder</h4>
+<p>Cylinder shapes describe a "tall circle" shape. They are similar in structure to capsules, they have a <code>radius</code> and <code>height</code> property. The height is aligned with the node's local vertical axis. If you wish to align it along a different axis, rotate the glTF node. If the <code>radius</code> property is omitted, the default radius is <code>0.5</code>, and if the <code>height</code> property is omitted, the default height is <code>2.0</code>.</p>
+<p>The use of cylinder is discouraged if another shape would work well in its place. Cylinders are harder to calculate than boxes, spheres, and capsules. Not all game engines support cylinder shapes. Engines that do not support cylinder shapes should use an approximation, such as a convex hull roughly shaped like a cylinder. Cylinders over twice as tall as they are wide can use another approximation: a convex hull combined with an embedded capsule (to allow for smooth rolling), by copying the cylinder's values into a new capsule shape.</p>
+<h4 id="hull">Hull</h4>
+<p>Hull shapes represent a convex hull. Being "convex" means that the shape cannot have any holes or divots. Hulls are defined with a <code>mesh</code> property with an index of a mesh in the glTF <code>meshes</code> array. The glTF mesh in the array MUST be a <code>trimesh</code> to work, and should be made of only one glTF mesh primitive (one surface). Valid hulls must contain at least one triangle, which becomes three points on the convex hull. Hulls are recommended to have at least four points so that they have 3D volume. The final hull shape should have no more than 255 points in total.</p>
+<p>Hulls can be used to represent complex convex shapes that are not easy to represent with other primitives. If a shape can be represented with a few primitives, prefer using those primitives instead of convex hulls. Hulls are much faster than trimesh shapes.</p>
+<h4 id="trimesh">Trimesh</h4>
+<p>Trimesh shapes represent a concave triangle mesh. They are defined with a <code>mesh</code> property with an index of a mesh in the glTF <code>meshes</code> array. The glTF mesh in the array MUST be a <code>trimesh</code> to work, and should be made of only one glTF mesh primitive (one surface). Valid trimesh shapes must contain at least one triangle.</p>
+<p>Avoid using a trimesh shape for most objects, they are the slowest shapes to calculate and have several limitations. Most physics engines do not support moving trimesh shapes or calculating collisions between multiple trimesh shapes. Trimesh shapes will not work reliably with trigger bodies or with pushing objects out due to not having an "interior" space, they only have a surface. Trimesh shapes are typically used for complex level geometry (for example, things that you can go inside of). If your shape can be represented with a combination of simpler primitives, or a convex hull, or multiple convex hulls, prefer that instead.</p>
+<h3 id="json-schema">JSON Schema</h3>
+<p>See <a href="schema/shape.schema.json">schema/shape.schema.json</a> for the main shape schema, <a href="schema/glTF.OMI_physics_shape.schema.json">schema/glTF.OMI_physics_shape.schema.json</a> for the document-level list of shapes, and <a href="schema/node.OMI_physics_shape.schema.json">schema/node.OMI_physics_shape.schema.json</a> for the node-level shape.</p>
+<h2 id="known-implementations">Known Implementations</h2>
+<ul>
+<li>None</li>
+</ul>
+<h2 id="resources">Resources:</h2>
+<ul>
+<li>Godot Shapes: <a href="https://docs.godotengine.org/en/latest/classes/class_shape3d.html">https://docs.godotengine.org/en/latest/classes/class_shape3d.html</a></li>
+<li>Unity Colliders: <a href="https://docs.unity3d.com/Manual/CollidersOverview.html">https://docs.unity3d.com/Manual/CollidersOverview.html</a></li>
+<li>Unreal Engine Collision Shapes: <a href="https://docs.unrealengine.com/4.27/en-US/API/Runtime/PhysicsCore/FCollisionShape/">https://docs.unrealengine.com/4.27/en-US/API/Runtime/PhysicsCore/FCollisionShape/</a></li>
+<li>Unreal Engine Mesh Collisions: <a href="https://docs.unrealengine.com/4.27/en-US/WorkingWithContent/Types/StaticMeshes/HowTo/SettingCollision/">https://docs.unrealengine.com/4.27/en-US/WorkingWithContent/Types/StaticMeshes/HowTo/SettingCollision/</a></li>
+<li>Blender Collisions: <a href="https://docs.blender.org/manual/en/latest/physics/rigid_body/properties/collisions.html">https://docs.blender.org/manual/en/latest/physics/rigid_body/properties/collisions.html</a></li>
+<li>Mozilla Hubs ammo-shape: <a href="https://github.com/MozillaReality/hubs-blender-exporter/blob/bb28096159e1049b6b80da00b1ae1534a6ca0855/default-config.json#L608">https://github.com/MozillaReality/hubs-blender-exporter/blob/bb28096159e1049b6b80da00b1ae1534a6ca0855/default-config.json#L608</a></li>
+</ul>
+</body>
+</html>
