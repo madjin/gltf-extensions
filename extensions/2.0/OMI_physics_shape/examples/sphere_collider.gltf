@@ -6,8 +6,10 @@
         "OMI_physics_shape": {
             "shapes": [
                 {
-                    "radius": 0.5,
-                    "type": "sphere"
+                    "type": "sphere",
+                    "sphere": {
+                        "radius": 0.5
+                    }
                 }
             ]
         }
@@ -18,27 +20,16 @@
     ],
     "nodes": [
         {
-            "children": [1],
             "extensions": {
                 "OMI_physics_body": {
-                    "type": "static"
-                }
-            },
-            "name": "StaticBody"
-        },
-        {
-            "extensions": {
-                "OMI_physics_shape": {
-                    "shape": 0
+                    "collider": {
+                        "shape": 0
+                    }
                 }
             },
             "name": "SphereShape"
         }
     ],
     "scene": 0,
-    "scenes": [
-        {
-            "nodes": [0]
-        }
-    ]
+    "scenes": [{ "nodes": [0] }]
 }

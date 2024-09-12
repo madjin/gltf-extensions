@@ -249,16 +249,16 @@
         "OMI_physics_shape": {
             "shapes": [
                 {
-                    "size": [
-                        2,
-                        0.100000001490116,
-                        0.100000001490116
-                    ],
-                    "type": "box"
+                    "type": "box",
+                    "box": {
+                        "size": [2, 0.1, 0.1]
+                    }
                 },
                 {
-                    "radius": 0.25,
-                    "type": "sphere"
+                    "type": "sphere",
+                    "sphere": {
+                        "radius": 0.25
+                    }
                 }
             ]
         },
@@ -385,7 +385,9 @@
             ],
             "extensions": {
                 "OMI_physics_body": {
-                    "type": "static"
+                    "motion": {
+                        "type": "static"
+                    }
                 }
             },
             "name": "SliderLine"
@@ -395,8 +397,10 @@
                 3
             ],
             "extensions": {
-                "OMI_physics_shape": {
-                    "shape": 0
+                "OMI_physics_body": {
+                    "collider": {
+                        "shape": 0
+                    }
                 }
             },
             "name": "SliderLineShape"
@@ -432,17 +436,19 @@
             ],
             "extensions": {
                 "OMI_physics_body": {
-                    "angularVelocity": [
-                        0.0174532998353243,
-                        0.0174532998353243,
-                        0.0174532998353243
-                    ],
-                    "linearVelocity": [
-                        1,
-                        0.00000000000208164995657567,
-                        0.00000000000208164995657567
-                    ],
-                    "type": "rigid"
+                    "motion": {
+                        "angularVelocity": [
+                            0.0174532998353243,
+                            0.0174532998353243,
+                            0.0174532998353243
+                        ],
+                        "linearVelocity": [
+                            1,
+                            0.00000000000208164995657567,
+                            0.00000000000208164995657567
+                        ],
+                        "type": "dynamic"
+                    }
                 }
             },
             "name": "Ball",
@@ -457,8 +463,10 @@
                 7
             ],
             "extensions": {
-                "OMI_physics_shape": {
-                    "shape": 1
+                "OMI_physics_body": {
+                    "collider": {
+                        "shape": 1
+                    }
                 }
             },
             "name": "BallShape"

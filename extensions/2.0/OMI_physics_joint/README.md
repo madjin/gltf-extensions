@@ -16,9 +16,9 @@ Depends on the `OMI_physics_body` spec, which depends on the `OMI_physics_shape`
 
 ## Overview
 
-This extension allows defining a glTF node as a physics joint for constraining rigid bodies.
+This extension allows defining a glTF node as a physics joint for constraining dynamic bodies.
 
-Each physics joint node is a separate node that references the two bodies it joints together. At least one of the bodies must be a rigid body (`OMI_physics_body` "rigid" or "vehicle") for the joint to function. One or zero of the connected nodes may be a solid body that joints cannot move (`OMI_physics_body` "static", "kinematic", "character"). A joint cannot be connected to a trigger body, and cannot be connected to a non-`OMI_physics_body` glTF node.
+Each physics joint node is a separate node that references the two bodies it joints together. At least one of the bodies must be a dynamic body (`OMI_physics_body` motion type "dynamic") for the joint to function. One or zero of the connected nodes may be a solid body that joints cannot move (`OMI_physics_body` motion type "static" or "kinematic"). A joint cannot be connected to a trigger body, and cannot be connected to a non-`OMI_physics_body` glTF node.
 
 Each physics joint node must reference one or more joint constraints defined in the document-level joint constraints array.
 
@@ -26,7 +26,7 @@ A joint should be on its own glTF node, it should not be on the same node as a m
 
 ### Example:
 
-This example defines 2 rigid bodies that are connected with a joint that constrains linearly on a fixed point, also known as a "pin" joint. This example JSON is a subset of the [examples/simple_joint.gltf](examples/simple_joint.gltf) file.
+This example defines 2 dynamic bodies that are connected with a joint that constrains linearly on a fixed point, also known as a "pin" joint. This example JSON is a subset of the [examples/simple_joint.gltf](examples/simple_joint.gltf) file.
 
 ```json
 {
@@ -62,7 +62,9 @@ This example defines 2 rigid bodies that are connected with a joint that constra
         {
             "extensions": {
                 "OMI_physics_body": {
-                    "type": "rigid"
+                    "motion": {
+                        "type": "dynamic"
+                    }
                 }
             },
             "name": "BodyA",
@@ -72,7 +74,9 @@ This example defines 2 rigid bodies that are connected with a joint that constra
         {
             "extensions": {
                 "OMI_physics_body": {
-                    "type": "rigid"
+                    "motion": {
+                        "type": "dynamic"
+                    }
                 }
             },
             "name": "BodyB",
@@ -153,9 +157,9 @@ If a joint node has multiple joint constraints that overlap each other, later co
 
 Each of these properties defines one of two bodies used by the joint. Must be an integer which is the index of the glTF node, and that node must be a physics body defined using the `OMI_physics_body` spec.
 
-At least one of the connected nodes must be a physics body using rigid body physics, meaning `OMI_physics_body` set to "rigid" or "vehicle". If neither node is using rigid body physics, the joints will not work. When physics body nodes are joined, they should not collide with each other. One or zero of the nodes can be a solid body that cannot be moved by joints, meaning `OMI_physics_body` set to "static", "kinematic" or "character". A connected node cannot be null, cannot be a non-body, and cannot be a trigger body.
+At least one of the connected nodes must be a physics body using dynamic rigid body physics, meaning `OMI_physics_body` motion type set to "dynamic". If neither node is using dynamic rigid body physics, the joints will not work. When physics body nodes are joined, they should not collide with each other. One or zero of the nodes can be a solid body that cannot be moved by joints, meaning `OMI_physics_body` motion type set to "static" or "kinematic". A connected node cannot be null, cannot be a non-body, and cannot be a trigger body.
 
-The position on the body on which the joint operates is determined by the position of the joint relative to each body node. As such, the initial position of the joint node does matter.
+The position on the body on which the joint operates is determined by the position of the joint relative to each body node. As such, the initial position of the joint node matters.
 
 ### Document Property Summary
 
@@ -178,7 +182,7 @@ In this chart, "fixed" means "constrained with lower and upper limits set to zer
 
 ### JSON Schema
 
-See [schema/joint_constraint.schema.json](schema/joint_constraint.schema.json), [schema/node.OMI_physics_joint.schema.json](schema/node.OMI_physics_joint.schema.json), and [schema/glTF.OMI_physics_joint.schema.json](schema/glTF.OMI_physics_joint.schema.json) for the schemas.
+See [glTF.OMI_physics_joint.joint_constraint.schema.json](schema/glTF.OMI_physics_joint.joint_constraint.schema.json), [node.OMI_physics_joint.schema.json](schema/node.OMI_physics_joint.schema.json), and [glTF.OMI_physics_joint.schema.json](schema/glTF.OMI_physics_joint.schema.json) for the schemas.
 
 ## Known Implementations
 

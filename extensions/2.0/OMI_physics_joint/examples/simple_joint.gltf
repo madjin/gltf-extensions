@@ -360,13 +360,17 @@
         "OMI_physics_shape": {
             "shapes": [
                 {
-                    "height": 0.5,
-                    "radius": 0.05,
-                    "type": "capsule"
+                    "type": "capsule",
+                    "capsule": {
+                        "height": 0.5,
+                        "radius": 0.05
+                    }
                 },
                 {
-                    "size": [1, 0.25, 1],
-                    "type": "box"
+                    "type": "box",
+                    "box": {
+                        "size": [1, 0.25, 1]
+                    }
                 }
             ]
         },
@@ -496,7 +500,9 @@
             "children": [4],
             "extensions": {
                 "OMI_physics_body": {
-                    "type": "rigid"
+                    "motion": {
+                        "type": "dynamic"
+                    }
                 }
             },
             "name": "BodyA",
@@ -507,7 +513,9 @@
             "children": [6],
             "extensions": {
                 "OMI_physics_body": {
-                    "type": "rigid"
+                    "motion": {
+                        "type": "dynamic"
+                    }
                 }
             },
             "name": "BodyB",
@@ -521,8 +529,10 @@
         {
             "children": [5],
             "extensions": {
-                "OMI_physics_shape": {
-                    "shape": 0
+                "OMI_physics_body": {
+                    "collider": {
+                        "shape": 0
+                    }
                 }
             },
             "name": "ShapeA",
@@ -536,8 +546,10 @@
         {
             "children": [7],
             "extensions": {
-                "OMI_physics_shape": {
-                    "shape": 0
+                "OMI_physics_body": {
+                    "collider": {
+                        "shape": 0
+                    }
                 }
             },
             "name": "ShapeB",
@@ -552,7 +564,9 @@
             "children": [9],
             "extensions": {
                 "OMI_physics_body": {
-                    "type": "static"
+                    "motion": {
+                        "type": "static"
+                    }
                 }
             },
             "name": "FloorBody",
@@ -561,8 +575,10 @@
         {
             "children": [10],
             "extensions": {
-                "OMI_physics_shape": {
-                    "shape": 1
+                "OMI_physics_body": {
+                    "collider": {
+                        "shape": 1
+                    }
                 }
             },
             "name": "FloorShape"

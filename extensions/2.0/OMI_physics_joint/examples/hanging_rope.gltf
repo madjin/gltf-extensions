@@ -462,7 +462,7 @@
             "perspective": {
                 "yfov": 1.30899691581726,
                 "zfar": 4000,
-                "znear": 0.0500000007450581
+                "znear": 0.05
             },
             "type": "perspective"
         }
@@ -471,17 +471,17 @@
         "OMI_physics_shape": {
             "shapes": [
                 {
-                    "size": [
-                        0.5,
-                        0.5,
-                        0.5
-                    ],
-                    "type": "box"
+                    "type": "box",
+                    "box": {
+                        "size": [0.5, 0.5, 0.5]
+                    }
                 },
                 {
-                    "height": 0.5,
-                    "radius": 0.0500000007450581,
-                    "type": "capsule"
+                    "type": "capsule",
+                    "capsule": {
+                        "height": 0.5,
+                        "radius": 0.05
+                    }
                 }
             ]
         },
@@ -652,7 +652,9 @@
             ],
             "extensions": {
                 "OMI_physics_body": {
-                    "type": "static"
+                    "motion": {
+                        "type": "static"
+                    }
                 }
             },
             "name": "Ceiling",
@@ -667,8 +669,10 @@
                 3
             ],
             "extensions": {
-                "OMI_physics_shape": {
-                    "shape": 0
+                "OMI_physics_body": {
+                    "collider": {
+                        "shape": 0
+                    }
                 }
             },
             "name": "CeilingShape"
@@ -701,7 +705,9 @@
             ],
             "extensions": {
                 "OMI_physics_body": {
-                    "type": "rigid"
+                    "motion": {
+                        "type": "dynamic"
+                    }
                 }
             },
             "name": "RopeSegmentTop",
@@ -722,8 +728,10 @@
                 7
             ],
             "extensions": {
-                "OMI_physics_shape": {
-                    "shape": 1
+                "OMI_physics_body": {
+                    "collider": {
+                        "shape": 1
+                    }
                 }
             },
             "name": "RopeShapeTop",
@@ -762,7 +770,9 @@
             ],
             "extensions": {
                 "OMI_physics_body": {
-                    "type": "rigid"
+                    "motion": {
+                        "type": "dynamic"
+                    }
                 }
             },
             "name": "RopeSegmentMiddle",
@@ -783,8 +793,10 @@
                 11
             ],
             "extensions": {
-                "OMI_physics_shape": {
-                    "shape": 1
+                "OMI_physics_body": {
+                    "collider": {
+                        "shape": 1
+                    }
                 }
             },
             "name": "RopeShapeMiddle",
@@ -823,7 +835,9 @@
             ],
             "extensions": {
                 "OMI_physics_body": {
-                    "type": "rigid"
+                    "motion": {
+                        "type": "dynamic"
+                    }
                 }
             },
             "name": "RopeSegmentBottom",
@@ -838,8 +852,10 @@
                 15
             ],
             "extensions": {
-                "OMI_physics_shape": {
-                    "shape": 1
+                "OMI_physics_body": {
+                    "collider": {
+                        "shape": 1
+                    }
                 }
             },
             "name": "RopeShapeBottom",
